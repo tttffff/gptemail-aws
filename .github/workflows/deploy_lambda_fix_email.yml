@@ -1,0 +1,39 @@
+name: Deploy fix email AWS Lambda
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 20
+
+    - name: Install dependencies
+      run: |
+        cd lambda_functions/fix_email
+        npm ci
+
+    - name: Zip the lambda function
+      run: |
+        cd lambda_functions/fix_email
+        zip -r fix_email.zip .
+
+    - name: Deploy to AWS Lambda
+      uses: appleboy/lambda-action@master
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws_region: eu-central-1
+        function_name: fixEmail
+        zip_file: lambda_functions/fix_email/fix_email.zip
+        environment: OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
