@@ -34,6 +34,6 @@ jobs:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws_region: ${{ secrets.AWS_REGION }}
-        function_name: fixEmail
+        function_name: ${{ secrets.AWS_LAMBDA_FUNCTION }}
         zip_file: lambda_functions/fix_email/fix_email.zip
         environment: OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
