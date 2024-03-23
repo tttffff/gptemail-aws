@@ -9,7 +9,7 @@ document.getElementById('promptForm').addEventListener('submit', async function 
   const emailInput = document.getElementById('promptInput').value
 
   try {
-    const response = await fetch('https://2h50lube6j.execute-api.eu-central-1.amazonaws.com/fixEmail', {
+    const response = await fetch('api/fixEmail', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ emailInput })
